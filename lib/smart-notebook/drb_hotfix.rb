@@ -3,8 +3,14 @@ module DRb
   module_function :public_ip, :public_ip=
 
   def get_public_ip
-    return `curl http://checkip.amazonaws.com`.chomp
+    @public_ip = `curl http://checkip.amazonaws.com`.chomp
   end
+  module_function :get_public_ip
+
+  def uri
+    current_server.uri
+  end
+  module_function :uri
 
   class DRbTCPSocket
     def self.getservername
