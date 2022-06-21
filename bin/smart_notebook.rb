@@ -2,8 +2,13 @@
 
 require 'smart-notebook'
 
-backend_pid = Process.fork do
-  SmartNotebook::WorkerServer.new.auto_restart
+begin
+  backend_pid = Process.fork do
+    SmartNotebook::WorkerServer.new.auto_restart
+  end
+rescue =>e
+  puts e.inspect
+  puts e.backtrace
 end
 
 sleep(0.1)

@@ -36,7 +36,7 @@ module SmartNotebook
     prepend SaveHistory
 
     def initialize(args = ARGV)
-      DRb.start_service(nil,nil, SmartNotebook.drb_config)
+      DRb.start_service(SmartNotebook.cli_uri ,nil, SmartNotebook.drb_config)
 
       @uri = (args[0] or SmartNotebook.worker_uri)
       @client = RemoteWorker.new(@uri)

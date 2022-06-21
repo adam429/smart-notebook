@@ -1,12 +1,23 @@
 #!/usr/bin/env ruby
 
 require 'smart-notebook'
+require 'optparse'
+
+options = {}
+OptionParser.new do |parser|
+  parser.on('-p','--public URI',"public URI for expose to external network")
+end.parse!(into: options)
+
+if options[:public] then
+  DRb.public_host, DRb.public_port = options[:public].split(":")
+end
 
 # get and setup public ip for non-local server
 servername = DRb::DRbTCPSocket.getservername
 if not (servername=="::1" or servername=="127.0.0.1") then
   DRb.get_public_ip()
-end
+else
 
+end
 # start worker server
 SmartNotebook::WorkerServer.new.auto_restart
