@@ -1,14 +1,14 @@
 module DRb
-  attr_accessor :public_ip
-  module_function :public_ip, :public_ip=
+  attr_accessor :public_ip, :public_port
+  module_function :public_ip, :public_ip=, :public_port, :public_port=
 
   def get_public_ip
-    @public_ip = `curl http://checkip.amazonaws.com`.chomp
+    @public_ip = `curl http://checkip.amazonaws.com 2>/dev/null`.chomp
   end
   module_function :get_public_ip
 
   def uri
-    current_server.uri
+    current_server.uri.gsub(/[0-9]+$/,@public_port.to_s)
   end
   module_function :uri
 
