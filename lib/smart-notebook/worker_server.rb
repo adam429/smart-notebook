@@ -183,8 +183,15 @@ module SmartNotebook
           puts "#{e.class}: #{e.to_s}"
           puts e.backtrace
         ensure
-          result_proc.call(ret) if result_proc
-          output_proc.call(nil) if output_proc
+          begin
+            result_proc.call(ret) if result_proc
+          rescue => e
+          end
+
+          begin
+            output_proc.call(nil) if output_proc
+          rescue => e
+          end
           @stdout.remove_hook(output_proc) if output_proc
           @stderr.remove_hook(output_proc) if output_proc
         end
