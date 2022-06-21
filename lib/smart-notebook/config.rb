@@ -8,8 +8,8 @@ module SmartNotebook
   end
 
   self.store_history = true
-  self.worker_uri = "drbssl://127.0.0.1:8429"
-  self.cli_uri    = "drbssl://127.0.0.1:8430"
+  self.worker_uri = "drbssl://:8429"
+  self.cli_uri    = ["drbssl://:8430","drbssl://:8431","drbssl://:8432","drbssl://:8433"]
   self.drb_config = {:SSLCertName=>[["CN", "localhost"]]}
 
 end

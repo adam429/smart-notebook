@@ -24,6 +24,13 @@ module SmartNotebook
       end
     end
 
+    def delete_hook(proc)
+      @mutex.synchronize do
+        @ref_count[proc.hash] = 0
+        @hook_proc.delete(proc)
+      end
+    end
+
     def puts(*lines)
       append_to_buffer(build_string { |sio| sio.puts(*lines) })
       @obj.puts(*lines)
@@ -80,8 +87,12 @@ module SmartNotebook
     def append_to_buffer(string)
       @buffer << string
 
-      @hook_proc.each do |proc|
-        proc.call(string)
+      @hook_proc.dup.each do |proc|
+        begin
+          proc.call(string)
+        rescue =>e
+          delete_hook(proc)
+        end
       end
     end
   end
