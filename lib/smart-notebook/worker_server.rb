@@ -92,7 +92,6 @@ module SmartNotebook
       @eval_thread = []
       @storage = {}
       @editor_proc = nil
-      @mutex = Mutex.new
 
       Pry.config.pager = false # Don't use the pager
       Pry.config.print = proc {|output, value|} # No result printing
@@ -213,10 +212,8 @@ module SmartNotebook
     def restart()
       puts "Restart Worker #{Process.pid}"
       DRb.stop_service
-      @mutex.synchronize do
-        @eval_thread.each { |thread| Thread.kill }
-        @eval_thread = []
-      end
+      @eval_thread.each { |thread| Thread.kill }
+      @eval_thread = []
       Process.kill("TERM", Process.pid)
     end
 
