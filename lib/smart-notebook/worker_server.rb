@@ -211,15 +211,10 @@ module SmartNotebook
 
     def restart()
       puts "Restart Worker #{Process.pid}"
-      puts "1"
       @eval_thread.each { |thread| thread.kill }
-      puts "2"
       @eval_thread = []
-      puts "3"
       DRb.stop_service
-      puts "4"
       Process.kill("KILL", Process.pid)
-      puts "5"
     end
 
     def shutdown()
