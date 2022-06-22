@@ -100,7 +100,10 @@ module SmartNotebook
         begin
           proc.call(string)
         rescue =>e
-          delete_hook(proc)
+          begin
+            delete_hook(proc)
+          rescue => e
+          end
         end
       end
     end
