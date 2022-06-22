@@ -32,6 +32,6 @@ puts "public: #{DRb.public_host}:#{DRb.public_port}" if DRb.public_host or DRb.p
 begin
   SmartNotebook::CLI.new.run
 ensure
-  Process.kill("INT", backend_pid)
+  Process.kill("TERM", backend_pid)
 end
 

@@ -212,18 +212,18 @@ module SmartNotebook
     def restart()
       puts "Restart Worker #{Process.pid}"
       DRb.stop_service
-      Process.kill("INT", Process.pid)
+      Process.kill("TERM", Process.pid)
     end
 
     def shutdown()
       if @parent_pid then
         puts "Shutdown Auto Restart #{@parent_pid}"
-        Process.kill("INT", @parent_pid)
+        Process.kill("TERM", @parent_pid)
       end
 
       puts "Shutdown Worker #{Process.pid}"
       DRb.stop_service
-      Process.kill("INT", Process.pid)
+      Process.kill("TERM", Process.pid)
     end
 
     def auto_restart(option={})
@@ -231,8 +231,8 @@ module SmartNotebook
 
       pid_alive = false
       loop do
-        trap('INT') do
-          Process.kill("INT", @worker_pid)
+        trap('TERM') do
+          Process.kill("TERM", @worker_pid)
           exit 0
         end
 
@@ -244,7 +244,7 @@ module SmartNotebook
           start_worker(@uri, fail: ->(e) {
             puts "Start Worker failed #{e.inspect}"
             puts e.backtrace
-            Process.kill("INT", @parent_pid)
+            Process.kill("TERM", @parent_pid)
           })
         end
 
@@ -257,8 +257,8 @@ module SmartNotebook
 
     def start_worker(uri,option={})
       @worker_pid = Process.fork do
-        trap('INT') do
-          puts "Signal INT shutdown the server #{@uri}"
+        trap('TERM') do
+          puts "Signal TERM shutdown the server #{@uri}"
           exit 0
         end
 
