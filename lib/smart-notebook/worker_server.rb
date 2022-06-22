@@ -243,6 +243,7 @@ module SmartNotebook
 
           start_worker(@uri, fail: ->(e) {
             puts "Start Worker failed #{e.inspect}"
+            puts e.backtrace
             Process.kill("INT", @parent_pid)
           })
         end
