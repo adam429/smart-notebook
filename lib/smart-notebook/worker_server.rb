@@ -259,11 +259,6 @@ module SmartNotebook
 
     def start_worker(uri,option={})
       @worker_pid = Process.fork do
-        trap('TERM') do
-          puts "Signal TERM shutdown the server #{@uri}"
-          exit 0
-        end
-
         begin
           worker = WorkerServer.new()
           DRb.start_service(uri, {worker:worker}, SmartNotebook.drb_config)
