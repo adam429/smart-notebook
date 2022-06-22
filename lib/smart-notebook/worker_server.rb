@@ -212,7 +212,7 @@ module SmartNotebook
     def restart()
       puts "Restart Worker #{Process.pid}"
       puts "1"
-      @eval_thread.each { |thread| Thread.kill }
+      @eval_thread.each { |thread| thread.kill }
       puts "2"
       @eval_thread = []
       puts "3"
