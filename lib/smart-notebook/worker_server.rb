@@ -214,7 +214,7 @@ module SmartNotebook
       DRb.stop_service
       @eval_thread.each { |thread| Thread.kill }
       @eval_thread = []
-      Process.kill("TERM", Process.pid)
+      Process.kill("KILL", Process.pid)
     end
 
     def shutdown()
