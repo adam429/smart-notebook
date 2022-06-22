@@ -33,17 +33,26 @@ module SmartNotebook
 
     def puts(*lines)
       append_to_buffer(build_string { |sio| sio.puts(*lines) })
-      @obj.puts(*lines)
+      begin
+        @obj.puts(*lines)
+      rescue =>e
+      end
     end
 
     def printf(*args)
       append_to_buffer(build_string { |sio| sio.printf(*args) })
-      @obj.printf(*args)
+      begin
+        @obj.printf(*args)
+      rescue =>e
+      end
     end
 
     def write(data)
       append_to_buffer(build_string { |sio| sio.write(data) })
-      @obj.write data
+      begin
+        @obj.write data
+      rescue =>e
+      end
     end
     alias_method :<<, :write
     alias_method :print, :write
