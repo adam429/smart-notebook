@@ -14,6 +14,7 @@
     #  ok - capture ctrl-c int signal in cli, exit from multiple line mode
     #  ok - connect command (object#uri)
     #  X - detach stdin of start_worker when start cli, end worker when cli is finish
+    #    - stdout/stderr callback - use buffer IO to send
 
     # Name lookup
     #  - run message queue service (local)
@@ -29,7 +30,6 @@
     #  - move data & code between nodes
     #  - delegation object
     #  - runtime load & save
-
 
     # Docker
        - Dockerfile

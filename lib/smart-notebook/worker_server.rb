@@ -234,7 +234,10 @@ module SmartNotebook
       pid_alive = false
       loop do
         trap('TERM') do
-          Process.kill("TERM", @worker_pid)
+          begin
+            Process.kill("TERM", @worker_pid)
+          rescue
+          end
           exit 0
         end
 
