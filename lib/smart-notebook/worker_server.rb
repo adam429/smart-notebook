@@ -144,6 +144,33 @@ module SmartNotebook
     end
 
     def run_command(code, output_proc=nil, system_proc = nil)
+      if system_proc == nil
+
+          system_proc = proc do |output, cmd, _|
+            status = nil
+            Open3.popen3 cmd do |stdin, stdout, stderr, wait_thr|
+              stdin.close # Send EOF to the process
+
+              until stdout.eof? and stderr.eof?
+                if res = IO.select([stdout, stderr])
+                  res[0].each do |io|
+                    next if io.eof?
+                    output.write io.read_nonblock(1024)
+                  end
+                end
+              end
+
+              status = wait_thr.value
+            end
+
+            unless status.success?
+              output.puts "Error while executing command: #{cmd}"
+            end
+          end
+
+      end
+
+
       @pry.config.system, @old_system = system_proc, @pry.config.system
       @stdout.add_hook(output_proc) if output_proc
 

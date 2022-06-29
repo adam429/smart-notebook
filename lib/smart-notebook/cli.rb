@@ -156,7 +156,11 @@ module SmartNotebook
             # ignore empty input
 
           elsif @client.find_command(buf) then
-            @client.run_command(buf, editor_proc, output_proc, system_proc)
+            # run remote command - .ls
+            @client.run_command(buf, editor_proc, output_proc, nil)
+          elsif @client.find_command(buf.gsub(/^\//,"\.")) then
+            # run local command - /ls
+            @client.run_command(buf.gsub(/^\//,"\."), editor_proc, output_proc, system_proc)
           else
             # deal with code input
             @code = @code + buf + "\n"
