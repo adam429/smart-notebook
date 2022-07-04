@@ -38,7 +38,7 @@ module DRb
     def run
       Thread.start do
         begin
-          AutoRetry.new.catch() do
+          SmartNotebook::AutoRetry.new.catch() do
             while main_loop
             end
           end
