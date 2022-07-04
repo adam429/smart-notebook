@@ -62,6 +62,11 @@ module SmartNotebook
       @worker.find_command(cmd)
     end
 
+    def run(filename)
+      check_connect()
+      @worker.eval_async(open(filename).read())
+    end
+
     def run_command(cmd, editor_proc=nil, output_proc=nil, system_proc = nil)
       check_connect()
       @worker.editor_proc = editor_proc

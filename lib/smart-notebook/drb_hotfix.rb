@@ -32,4 +32,20 @@ module DRb
   end
   module_function :uri
 
+  class DRbServer
+    private
+
+    def run
+      Thread.start do
+        begin
+          AutoRetry.new.catch() do
+            while main_loop
+            end
+          end
+        ensure
+          @protocol.close if @protocol
+        end
+      end
+    end
+  end
 end

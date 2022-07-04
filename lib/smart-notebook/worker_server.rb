@@ -126,6 +126,7 @@ module SmartNotebook
 
 
     def eval(code)
+      Pry.current_line = 1
       @pry.evaluate_ruby (code)
 
       raise @pry.last_exception if @pry.last_result_is_exception?

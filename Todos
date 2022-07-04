@@ -14,6 +14,7 @@
     #  ok - capture ctrl-c int signal in cli, exit from multiple line mode
     #  ok - connect command (object#uri)
     #  X - detach stdin of start_worker when start cli, end worker when cli is finish
+    #  ok - remote command v.s local command
     #    - stdout/stderr callback - use buffer IO to send
 
     # Name lookup
@@ -23,7 +24,12 @@
     #  - define protocol   sn://name
     #  - run message queue service (remote)
 
+
     # Worker
+    #  - load local code (load "xxx")
+    #  - task scheduler & task cron
+    #  - global vars in a persistency class
+    #
     #  - source code with class
     #  - define class with marshal
     #  ok - remote block yield
