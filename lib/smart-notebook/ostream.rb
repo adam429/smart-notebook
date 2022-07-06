@@ -39,6 +39,14 @@ module SmartNotebook
       end
     end
 
+    def putc(obj)
+      append_to_buffer(build_string { |sio| sio.putc(obj) })
+      begin
+        @obj.putc(obj)
+      rescue =>e
+      end
+    end
+
     def printf(*args)
       append_to_buffer(build_string { |sio| sio.printf(*args) })
       begin
